@@ -131,17 +131,22 @@ class AddressBook(UserDict):
                 break
 
     def iterator(self, n):
+        values = list(self.data.values())
+        for i in range(0, len(values), n):
+            yield '\n'.join(map(str, values[i:i+n]))
+
+    """
+    def iterator(self, n):
         counter = 0
         while counter < len(self.data):
             i = 0
-            result = ''
             for value in self.data.values():
                 if i >= counter and i < counter + n:
                     result += str(value) + '\n'
                 i += 1
             yield result
             counter += n   
-    
+    """
 
 if __name__ == '__main__':
     book = AddressBook()
@@ -176,6 +181,6 @@ if __name__ == '__main__':
     book.add_record(record6)
 
 
-    iter = book.iterator(3)
+    iter = book.iterator(4)
     for i in iter:
         print(i)
